@@ -8,7 +8,8 @@ import java.util.List;
 @Service
 public class MRNValidationService {
 
-    String mrnBase = "urn:mrn:mcl:";
+    String mrnBase = "urn:mrn:";
+    String mcpMrnBase = "urn:mrn:mcl";
 
     public String getMrnMask(String nameSpace, String organizationMrn) {
         //e.g. "urn:mrn:mcl:<namespace>:<orgShortName>:"
@@ -16,9 +17,9 @@ public class MRNValidationService {
 
         String orgShortName = getOrgShortName(organizationMrn);
         if (orgShortName.isEmpty())
-            return mrnBase + nameSpace + ":";
+            return mcpMrnBase + nameSpace + ":";
         else
-            return mrnBase + nameSpace + ":" + orgShortName + ":";
+            return mcpMrnBase + nameSpace + ":" + orgShortName + ":";
 
     }
 
@@ -32,14 +33,16 @@ public class MRNValidationService {
 
         String orgShortName = getOrgShortName(organizationMrn);
         if (orgShortName.isEmpty())
-            return mrnBase+ getValidatedType(type) + ":" + nameSpace + ":";
+            return mcpMrnBase+ getValidatedType(type) + ":" + nameSpace + ":";
         else
-            return mrnBase+ getValidatedType(type) + ":" + nameSpace + ":" + orgShortName + ":";
+            return mcpMrnBase+ getValidatedType(type) + ":" + nameSpace + ":" + orgShortName + ":";
 
     }
 
     public Boolean checkMrnForNamespace(String nameSpace, String organizationMrn){
         /*
+        // not implemented yet
+
         examples of valid mrns (needs to follow the mrn-syntax from https://www.iana.org/assignments/urn-formal/mrn)
         vessel: "urn:mrn:mcp:vessel:dma:vesselid-123"
         specification: "urn:mrn:mcp:service:specification:dma:specid-123"
@@ -85,7 +88,7 @@ public class MRNValidationService {
 
     //////////////////// not implemented yet ////////////////////
     private boolean checkOrganization(String orgString){
-        return true;
+        return false;
     }
     /////////////////////////////////////////////////////////////
 
@@ -100,8 +103,6 @@ public class MRNValidationService {
        if(!tokens[0].equals("urn"))
            return false;
        if(!tokens[1].equals("mrn"))
-           return false;
-       if(!tokens[2].equals("mcl"))
            return false;
        /*
        if(!checkType(tokens[3]))
