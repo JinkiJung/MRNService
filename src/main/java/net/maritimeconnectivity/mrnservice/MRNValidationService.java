@@ -9,7 +9,7 @@ import java.util.List;
 public class MRNValidationService {
 
     String mrnBase = "urn:mrn:";
-    String mcpMrnBase = "urn:mrn:mcl";
+    String mcpMrnBase = "urn:mrn:mcl:";
 
     public String getMrnMask(String nameSpace, String organizationMrn) {
         //e.g. "urn:mrn:mcl:<namespace>:<orgShortName>:"
